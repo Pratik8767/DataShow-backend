@@ -37,6 +37,8 @@ Activate the virtual environment:a
 * Windows Users
 ```bash
   venv\Scripts\activate
+ ' if there is error'
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 * Linux or MacOs Users
 ```bash
