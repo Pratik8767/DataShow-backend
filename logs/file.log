@@ -1,0 +1,9 @@
+api.py:25 - 2025-01-28 19:59:22,112 - ERROR - Error : 400: Only CSV files are allowed.
+api.py:25 - 2025-01-28 19:59:22,112 - ERROR - Error : 400: Only CSV files are allowed.
+api.py:25 - 2025-01-28 19:59:22,112 - ERROR - Error : 400: Only CSV files are allowed.
+service.py:47 - 2025-01-28 20:00:07,380 - INFO - Save file : {'row_count': 79, 'column_count': 15, 'empty_cells': 4, 'file_name': 'metadata 2.csv', 'id': '38adb077-ce99-4e50-9bfb-adcf4cd63ee9', 'uploaded_at': datetime.datetime(2025, 1, 28, 20, 0, 7, 285533)}
+service.py:47 - 2025-01-28 20:00:07,380 - INFO - Save file : {'row_count': 79, 'column_count': 15, 'empty_cells': 4, 'file_name': 'metadata 2.csv', 'id': '38adb077-ce99-4e50-9bfb-adcf4cd63ee9', 'uploaded_at': datetime.datetime(2025, 1, 28, 20, 0, 7, 285533)}
+service.py:47 - 2025-01-28 20:00:07,380 - INFO - Save file : {'row_count': 79, 'column_count': 15, 'empty_cells': 4, 'file_name': 'metadata 2.csv', 'id': '38adb077-ce99-4e50-9bfb-adcf4cd63ee9', 'uploaded_at': datetime.datetime(2025, 1, 28, 20, 0, 7, 285533)}
+api.py:22 - 2025-01-28 20:00:07,380 - INFO - File uploaded successfully metadata 2.csv
+api.py:22 - 2025-01-28 20:00:07,380 - INFO - File uploaded successfully metadata 2.csv
+api.py:22 - 2025-01-28 20:00:07,380 - INFO - File uploaded successfully metadata 2.csv
