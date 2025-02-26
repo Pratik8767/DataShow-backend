@@ -1,52 +1,50 @@
-
-
-
 import tempfile
 import pandas as pd
-from file.services.service import FileManagement
-
+from src.file.services.service import FileManagement
 
 class CleanUpService:
-
-
+    cleaned_file_path=None
     @staticmethod
     def cleanup_methods(cleanup_actions):
+        '''
+        Performs cleanup actions on the uploaded file and saves the cleaned data into a new file.
+
+        Returns:
+        A dictionary with details of the cleanup operation.
+        '''
         try:
             if FileManagement.temp_file_path is None:
-                raise ("no file uploaded")
-            df=pd.read_csv(FileManagement.temp_file_path)
-            applied_operations=[]
+                raise Exception("No file uploaded")
+
+            df = pd.read_csv(FileManagement.temp_file_path)
+            applied_operations = []
 
             for action in cleanup_actions:
-                if action=="remove_duplicates":
-                    df=CleanUpService.remove_duplicates(df)
-                elif action =="fill_missing_values":
-                    df=CleanUpService.fill_missing_values(df)
-                elif action=="convert_data_types":
-                    df=CleanUpService.convert_data_types(df)
-
-                else:raise(f"Invalid cleanup option:{action}")
-
+                if action == "remove_duplicates":
+                    df = CleanUpService.remove_duplicates(df)
+                elif action == "fill_missing_values":
+                    df = CleanUpService.fill_missing_values(df)
+                elif action == "convert_data_types":
+                    df = CleanUpService.convert_data_types(df)
+                else:
+                    raise Exception(f"Invalid cleanup option: {action}")
+                
                 applied_operations.append(action)
 
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as cleaned_temp_file:
+            with tempfile.NamedTemporaryFile(delete=False, suffix="_cleaned.csv") as cleaned_temp_file:
                 df.to_csv(cleaned_temp_file.name, index=False)
-                FileManagement.temp_file_path = cleaned_temp_file.name
+                CleanUpService.cleaned_file_path = cleaned_temp_file.name
+
 
             return {
                 "message": "Cleanup operations completed",
                 "applied_operations": applied_operations,
-                "file_name": FileManagement.temp_file_path,
+                "cleaned_file_path": CleanUpService.cleaned_file_path,
                 "new_row_count": df.shape[0],
                 "new_column_count": df.shape[1],
             }
-
         except Exception as e:
             raise Exception(f"Cleanup failed: {str(e)}")
-
-
-
-
 
     @staticmethod
     def remove_duplicates(df):
