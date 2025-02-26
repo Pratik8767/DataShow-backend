@@ -7,3 +7,30 @@ service.py:47 - 2025-01-28 20:00:07,380 - INFO - Save file : {'row_count': 79, '
 api.py:22 - 2025-01-28 20:00:07,380 - INFO - File uploaded successfully metadata 2.csv
 api.py:22 - 2025-01-28 20:00:07,380 - INFO - File uploaded successfully metadata 2.csv
 api.py:22 - 2025-01-28 20:00:07,380 - INFO - File uploaded successfully metadata 2.csv
+dao.py:29 - 2025-02-02 10:11:59,138 - ERROR - (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+dao.py:29 - 2025-02-02 10:11:59,138 - ERROR - (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+dao.py:29 - 2025-02-02 10:11:59,138 - ERROR - (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+service.py:50 - 2025-02-02 10:11:59,141 - ERROR - Error : Error uploading file: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+service.py:50 - 2025-02-02 10:11:59,141 - ERROR - Error : Error uploading file: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+service.py:50 - 2025-02-02 10:11:59,141 - ERROR - Error : Error uploading file: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+api.py:25 - 2025-02-02 10:11:59,141 - ERROR - Error : Error uploading CSV file: Error uploading file: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+api.py:25 - 2025-02-02 10:11:59,141 - ERROR - Error : Error uploading CSV file: Error uploading file: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+api.py:25 - 2025-02-02 10:11:59,141 - ERROR - Error : Error uploading CSV file: Error uploading file: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
