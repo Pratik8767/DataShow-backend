@@ -65,6 +65,6 @@ class CleanUpService:
     def convert_data_types(df):
         """Converts columns to appropriate data types."""
         df = df.convert_dtypes()
-        if "Subscription Date" in df.columns:
-            df["Subscription Date"] = pd.to_datetime(df["Subscription Date"], errors="coerce")
+        if "Date" in df.columns:
+            df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
         return df

@@ -15,7 +15,7 @@ def perform_cleanup():
         if not cleanup_actions or not isinstance(cleanup_actions, list):
             return jsonify({"error": "No cleanup actions specified or invalid format"}), 400
 
-        result = CleanUpService.cleanup_methods(cleanup_actions)
+        result = CleanUpService.cleanup_methods(cleanup_actions) 
         return jsonify(result), 200
 
     except Exception as e:
