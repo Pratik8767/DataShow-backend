@@ -22,16 +22,19 @@
 #         return jsonify({"error": str(e)}), 500
 
 
+from typing import List, Optional
+from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException, Request
 from src.cleanup.cleanup_services.cleanup_services import CleanUpService
-
 router = APIRouter()
 
+class CleanupRequest(BaseModel):
+    cleanup_type: Optional[List[str]] = None  
+
 @router.post("/file/cleanup")
-async def perform_cleanup(request: Request):
+async def perform_cleanup(request: CleanupRequest):
     try:
-        request_data = await request.json()
-        cleanup_actions = request_data.get("cleanup_actions")
+        cleanup_actions = request.cleanup_type  
 
         if not cleanup_actions or not isinstance(cleanup_actions, list):
             raise HTTPException(status_code=400, detail="No cleanup actions specified or invalid format")

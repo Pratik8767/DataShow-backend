@@ -75,5 +75,4 @@ Go to the project directory
 Run Project
  
 ```bash
-uvicorn src.main:app --reload
-```
+python -m uvicorn src.app:app --reload```
