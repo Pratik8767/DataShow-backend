@@ -4,6 +4,7 @@ from src.distribution_charts.distribution_api.distribution_api import Distributi
 from fastapi import FastAPI
 from src.cleanup.cleanup_api.cleanup_api import router as cleanup_router
 from src.file.api.api import FileRouter
+from fastapi.middleware.cors import CORSMiddleware 
 # app = FastAPI()
 
 app = FastAPI(
@@ -11,6 +12,16 @@ app = FastAPI(
     description="These are the API's for Datashow Backend",
     # openapi_url="/management/openapi.json",
     docs_url="/datashow/docs",
+)
+
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (for testing); change to specific domains in production
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (POST, GET, etc.)
+    allow_headers=["*"],  # Allow all headers
 )
 # Include the router 
 app.include_router(cleanup_router)
