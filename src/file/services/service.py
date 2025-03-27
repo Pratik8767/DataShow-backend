@@ -1,6 +1,8 @@
 import pandas as pd
 import tempfile
 
+from cleanup.cleanup_services.cleanup_services import CleanUpService
+
 class FileManagement:
     temp_file_path = None
     file_name = None
@@ -15,7 +17,7 @@ class FileManagement:
 
             df = pd.read_csv(FileManagement.temp_file_path)
             row_count = df.shape[0]
-            column_count = df.shape[1]
+            column_count = df.shape[1] 
             empty_cells = df.isnull().sum().sum()
             FileManagement.file_name = filename
 
@@ -35,10 +37,13 @@ class FileManagement:
     def get_file_status() -> dict:
         """Returns metadata of the uploaded file, including duplicate count."""
         try:
-            if FileManagement.temp_file_path is None:
-                raise ValueError("No file uploaded")
+            # if FileManagement.temp_file_path is None:
+            #     raise ValueError("No file uploaded")
+            file_path = CleanUpService.cleaned_file_path if CleanUpService.cleaned_file_path else FileManagement.temp_file_path
+            if file_path is None:
+             raise ValueError("No file available")
 
-            df = pd.read_csv(FileManagement.temp_file_path)
+            df = pd.read_csv(file_path)
             row_count = df.shape[0]
             column_count = df.shape[1]
             empty_cells = df.isnull().sum().sum()

@@ -5,7 +5,6 @@ from fastapi import FastAPI
 from src.cleanup.cleanup_api.cleanup_api import router as cleanup_router
 from src.file.api.api import FileRouter
 from fastapi.middleware.cors import CORSMiddleware 
-# app = FastAPI()
 
 app = FastAPI(
     title="Datashow API",
