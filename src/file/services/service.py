@@ -1,7 +1,7 @@
 import pandas as pd
 import tempfile
 
-from cleanup.cleanup_services.cleanup_services import CleanUpService
+from src.cleanup.cleanup_services.cleanup_services import CleanUpService
 
 class FileManagement:
     temp_file_path = None
@@ -16,7 +16,7 @@ class FileManagement:
                 FileManagement.temp_file_path = temp_file.name
 
             df = pd.read_csv(FileManagement.temp_file_path)
-            row_count = df.shape[0]
+            row_count = df.shape
             column_count = df.shape[1] 
             empty_cells = df.isnull().sum().sum()
             FileManagement.file_name = filename
