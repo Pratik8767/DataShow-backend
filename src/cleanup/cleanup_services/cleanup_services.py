@@ -19,17 +19,18 @@ class CleanUpService:
                 if action == "remove_duplicates":
                     df = CleanUpService.remove_duplicates(df)
                 elif action == "fill_missing_values":
-                    df = CleanUpService.fill_missing_values(df)
+                    df = CleanUpService.fill_missing_values(df) 
                 elif action == "convert_data_types":
                     df = CleanUpService.convert_data_types(df)
                 else:
                     raise ValueError(f"Invalid cleanup option: {action}")
                 
-                applied_operations.append(action)
+                applied_operations.append(action) 
 
             with tempfile.NamedTemporaryFile(delete=False, suffix="_cleaned.csv") as cleaned_temp_file:
                 df.to_csv(cleaned_temp_file.name, index=False)
                 CleanUpService.cleaned_file_path = cleaned_temp_file.name
+
 
             return {
                 "message": "Cleanup operations completed",
@@ -37,6 +38,8 @@ class CleanUpService:
                 "cleaned_file_path": CleanUpService.cleaned_file_path,
                 "new_row_count": df.shape[0],
                 "new_column_count": df.shape[1],
+                "empty_cells": int(df.isnull().sum().sum()),
+
             }
         except Exception as e:
             raise Exception(f"Cleanup failed: {str(e)}")
@@ -50,10 +53,11 @@ class CleanUpService:
     def fill_missing_values(df: pd.DataFrame) -> pd.DataFrame:
         """Fills missing values based on column type."""
         for col in df.columns:
-            if df[col].dtype == "object":
-                df[col].fillna("Unknown", inplace=True)
-            else:
-                df[col].fillna(df[col].mean(), inplace=True)  
+             if df[col].dtype == "object":
+                df[col] = df[col].fillna("Unknown")
+             else:
+                  df[col] = df[col].fillna(df[col].mean())
+  
         return df
 
     @staticmethod
