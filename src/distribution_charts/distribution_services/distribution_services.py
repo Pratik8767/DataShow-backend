@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 import pandas as pd
+from src.cleanup.cleanup_services.cleanup_services import CleanUpService
 from src.file.services.service import FileManagement
 
 
@@ -12,8 +13,14 @@ class DistributionServices:
             if FileManagement.temp_file_path is None:
                 raise ValueError("No file uploaded")
 
-            df = pd.read_csv(FileManagement.temp_file_path)
-
+             
+            if CleanUpService.cleaned_file_path:
+                            df = pd.read_csv(CleanUpService.cleaned_file_path)
+                            # print('clened file')
+            else:
+                 df = pd.read_csv(FileManagement.temp_file_path)
+                #  print('original file')
+           
             # Selecting numerical and categorical columns
             numerical_cols = df.select_dtypes(include=['number']).columns
             if len(numerical_cols) == 0:
@@ -66,8 +73,12 @@ class DistributionServices:
             if FileManagement.temp_file_path is None:
                 raise ValueError("No file uploaded")
 
-            df = pd.read_csv(FileManagement.temp_file_path)
-
+            if CleanUpService.cleaned_file_path:
+                            df = pd.read_csv(CleanUpService.cleaned_file_path)
+                            # print('clened file')
+            else:
+                 df = pd.read_csv(FileManagement.temp_file_path)
+                 
             categorical_cols = df.select_dtypes(include=['object']).columns
 
             if len(categorical_cols) == 0:
