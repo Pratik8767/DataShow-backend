@@ -10,22 +10,20 @@ class DistributionServices:
     @staticmethod
     def distribution_service() -> dict:
         try:
+            # Check if a file is uploaded
             if FileManagement.temp_file_path is None:
                 raise ValueError("No file uploaded")
 
-             
-            if CleanUpService.cleaned_file_path:
-                            df = pd.read_csv(CleanUpService.cleaned_file_path)
-                            # print('clened file')
-            else:
-                 df = pd.read_csv(FileManagement.temp_file_path)
-                #  print('original file')
-           
-            # Selecting numerical and categorical columns
+            # Determine which file to use (cleaned or original)
+            file_path = CleanUpService.cleaned_file_path if CleanUpService.cleaned_file_path else FileManagement.temp_file_path
+            df = pd.read_csv(file_path)
+
+            # Selecting numerical columns
             numerical_cols = df.select_dtypes(include=['number']).columns
             if len(numerical_cols) == 0:
                 raise HTTPException(status_code=400, detail="No numerical columns found.")
-            distribution_metrics = {"numerical": {}}
+
+            distribution_metrics = {"numerical": []}
             chart_limits = {
                 "max_range": 0,
                 "max_variance": 0,
@@ -35,36 +33,40 @@ class DistributionServices:
 
             # Computing numerical data distribution
             for col in numerical_cols:
-                min_val = int(df[col].min())
-                max_val = int(df[col].max())
+                min_val = df[col].min()
+                max_val = df[col].max()
                 range_val = max_val - min_val
-                variance = float(df[col].var())
-                std_dev = float(df[col].std())
-                iqr = float(df[col].quantile(0.75) - df[col].quantile(0.25))
+                variance = df[col].var()
+                std_dev = df[col].std()
+                iqr = df[col].quantile(0.75) - df[col].quantile(0.25)
 
-                distribution_metrics["numerical"][col] = {
-                    "range": range_val,
-                    "variance": variance,
-                    "standard_deviation": std_dev,
-                    "interquartile_range": iqr,
-                }
-                chart_limits["max_range"] = max(chart_limits["max_range"], max_val)
-                chart_limits["max_variance"] = max(chart_limits["max_variance"], variance)
-                chart_limits["max_standard_deviation"] = max(chart_limits["max_standard_deviation"], std_dev)
-                chart_limits["max_interquartile_range"] = max(chart_limits["max_interquartile_range"], iqr)
+                # Append to the numerical metrics list
+                distribution_metrics["numerical"].append({
+                    "column_name": col,
+                    "range": float(range_val),
+                    "variance": float(variance),
+                    "standard_deviation": float(std_dev),
+                    "interquartile_range": float(iqr),
+                })
 
-          
+                # Update chart limits
+                chart_limits["max_range"] = max(chart_limits["max_range"], float(max_val))
+                chart_limits["max_variance"] = max(chart_limits["max_variance"], float(variance))
+                chart_limits["max_standard_deviation"] = max(chart_limits["max_standard_deviation"], float(std_dev))
+                chart_limits["max_interquartile_range"] = max(chart_limits["max_interquartile_range"], float(iqr))
 
             return {
-                'message': 'Data distribution calculated',
-                'distribution_metrics': distribution_metrics,
-                'chart_limits': chart_limits
+                "message": "Data distribution calculated",
+                "distribution_metrics": distribution_metrics,
+                "chart_limits": chart_limits
             }
 
         except ValueError as ve:
             raise HTTPException(status_code=400, detail=str(ve))
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error computing data distribution: {str(e)}")
+
+
 
 
     @staticmethod

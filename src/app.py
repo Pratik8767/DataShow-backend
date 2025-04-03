@@ -1,5 +1,6 @@
 import os
 import uvicorn
+from src.outliers.outliers_api.outliers_api import Outliers
 from src.distribution_charts.distribution_api.distribution_api import Distribution
 from fastapi import FastAPI
 from src.cleanup.cleanup_api.cleanup_api import router as cleanup_router
@@ -26,6 +27,7 @@ app.add_middleware(
 app.include_router(cleanup_router)
 app.include_router(FileRouter.router)
 app.include_router(Distribution.router)
+app.include_router(Outliers.router)
 
 # Run with: uvicorn main:app --reload
 

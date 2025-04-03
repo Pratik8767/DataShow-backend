@@ -70,6 +70,7 @@ class FileManagement:
             if CleanUpService.cleaned_file_path:
                 df = pd.read_csv(CleanUpService.cleaned_file_path)
                 return {
+                    "file_name":FileManagement.file_name,
                     "status": "Cleaned file data",
                     "file_path": CleanUpService.cleaned_file_path,
                     "row_count": df.shape[0],
@@ -82,6 +83,7 @@ class FileManagement:
             else:
                 df = pd.read_csv(FileManagement.temp_file_path)
                 return {
+                    "file_name":FileManagement.file_name,
                     "status": "Original uploaded file data",
                     "file_path": FileManagement.temp_file_path,
                     "row_count": df.shape[0],
