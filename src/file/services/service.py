@@ -1,9 +1,12 @@
+import numpy as np
 import pandas as pd
 import tempfile
 
 # from src.cleanup.cleanup_services.cleanup_services import CleanUpService
 
 class FileManagement:
+    """Something"""
+
     temp_file_path = None
     file_name = None
 
@@ -31,7 +34,7 @@ class FileManagement:
             return {"message": "File Uploaded Successfully", "file_details": data}
 
         except Exception as e:
-            raise Exception(f"Error uploading CSV file: {str(e)}")
+            raise Exception(f"Error uploading CSV file: {str(e)}") from e
 
     @staticmethod
     def get_file_status(cleaned_file_path: str = None) -> dict:
@@ -41,34 +44,12 @@ class FileManagement:
         try:
             if FileManagement.temp_file_path is None:
                 raise ValueError("No file uploaded")
-            
-            # file_path =  FileManagement.temp_file_path
-            # if file_path is None:
-            #  raise ValueError("No file available")
-            # print("File used for status:", file_path)
 
-
-            # df = pd.read_csv(file_path)
-            # row_count = df.shape[0]
-            # column_count = df.shape[1]
-            # empty_cells = df.isnull().sum().sum()
-            # duplicates = df.duplicated().sum()
-            # file_name = FileManagement.file_name
-            # column_data_types = {col: str(df[col].dtype) for col in df.columns}
-
-            # data = {
-            #     "file_name": file_name,
-            #     "row_count": int(row_count),
-            #     "column_count": int(column_count),
-            #     "empty_cells": int(empty_cells),
-            #     "duplicates": int(duplicates),
-            #     "columns_datatypes": column_data_types
-            # }
-
-            # return data
 
             if CleanUpService.cleaned_file_path:
                 df = pd.read_csv(CleanUpService.cleaned_file_path)
+                numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
+
                 return {
                     "file_name":FileManagement.file_name,
                     "status": "Cleaned file data",
@@ -78,10 +59,13 @@ class FileManagement:
                     "empty_cells": int(df.isnull().sum().sum()),
                     "duplicates":int(df.duplicated().sum()),
                     "column_data_types" : {col: str(df[col].dtype) for col in df.columns},
-                    "data_preview": df.head(10).to_dict(orient="records")
+                    "data_preview": df.head(10).to_dict(orient="records"),
+                    "numeric_columns":numeric_columns
                 }
             else:
                 df = pd.read_csv(FileManagement.temp_file_path)
+                numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
+
                 return {
                     "file_name":FileManagement.file_name,
                     "status": "Original uploaded file data",
@@ -92,7 +76,9 @@ class FileManagement:
                     "duplicates":int(df.duplicated().sum()),
 
                     "column_data_types" : {col: str(df[col].dtype) for col in df.columns},
-                    "data_preview": df.head(10).to_dict(orient="records")
+                    "data_preview": df.head(10).to_dict(orient="records"),
+                    "numeric_columns":numeric_columns
+
                 }
 
 
